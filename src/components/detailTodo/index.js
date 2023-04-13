@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   actionDeleteTodo,
-  actionGetTodo,
+  // actionGetTodo,
   actionUpdateTodo,
 } from "../../action/actionTodo";
 import UpdateData from "../updateData";

@@ -1,11 +1,10 @@
 import axios from "axios";
+const token = localStorage.getItem("token");
 
 // add todo
 export const actionAddTodo = (datas) => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
-    // dispatch({ type: "DATA_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/todos`;
+    const url = `https://fastapi-todos-be.onrender.com/todos/`;
     const response = await axios({
       method: "post",
       url: url,
@@ -33,8 +32,6 @@ export const actionAddTodo = (datas) => async (dispatch) => {
 
 export const actionDeleteTodo = (datas) => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
-    // dispatch({ type: "DATA_RESQUEST" });
     const url = `https://fastapi-todos-be.onrender.com/todos/${datas.id}`;
     const response = await axios({
       method: "delete",
@@ -63,9 +60,8 @@ export const actionDeleteTodo = (datas) => async (dispatch) => {
 // get todo
 export const actionGetTodo = (data) => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
     dispatch({ type: "DATA_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/todos`;
+    const url = `https://fastapi-todos-be.onrender.com/todos/`;
     const response = await axios({
       method: "get",
       url: url,
@@ -92,8 +88,6 @@ export const actionGetTodo = (data) => async (dispatch) => {
 
 export const actionUpdateTodo = (datas, id) => async (dispatch) => {
   try {
-    const token = localStorage.getItem("token");
-    // dispatch({ type: "DATA_RESQUEST" });
     const url = `https://fastapi-todos-be.onrender.com/todos/${id}`;
     const response = await axios({
       method: "put",
