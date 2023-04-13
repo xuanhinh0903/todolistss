@@ -33,6 +33,7 @@ const AddData = () => {
   const onSubmit = (data, e) => {
     const complete = selectedValue !== "a";
     const newData = {
+      // id: Math.floor(Math.random() * 1000),
       complete: complete,
       description: data.name,
       title: data.title,

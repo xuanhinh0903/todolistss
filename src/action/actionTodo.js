@@ -4,6 +4,7 @@ const token = localStorage.getItem("token");
 // add todo
 export const actionAddTodo = (datas) => async (dispatch) => {
   try {
+    // dispatch({ type: "DATA_RESQUEST" });
     const url = `https://fastapi-todos-be.onrender.com/todos/`;
     const response = await axios({
       method: "post",
@@ -70,7 +71,6 @@ export const actionGetTodo = (data) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log("🚀 ~ file: actionTodo.js:73 ~ actionGetTodo ~ response:", response)
 
     dispatch({
       type: "DATA_SUCCESS",

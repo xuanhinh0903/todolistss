@@ -10,6 +10,7 @@ export const actionLogin = (data) => async (dispatch) => {
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data,
     });
+    console.log("🚀 ~ file: loginSlice.js:13 ~ actionLogin ~ response:", response)
 
     response.data.access_token &&
       localStorage.setItem("token", response.data.access_token);

@@ -13,11 +13,10 @@ const TodoList = (props) => {
   const navigation = useNavigate();
   const DATA = useSelector((state) => state?.todolistReducer);
 
-  useEffect(() => {
-    dispatch(actionGetTodo());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(actionGetTodo());
+  // }, []);
 
-  console.log(DATA?.message?.message);
   useEffect(() => {
     if (DATA?.message?.message === "Request failed with status code 404") {
       toast.error("token expires");

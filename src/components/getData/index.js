@@ -23,10 +23,10 @@ import {
 } from "../../action/actionTodo";
 
 const GetData = (props) => {
-  const { requesting, list, message } = props?.data;
-
-  const dispatch = useDispatch();
+  // const { requesting, list, message } = props?.data;
   const DATA = useSelector((state) => state?.todolistReducer);
+  const { requesting, list, message } = DATA;
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -71,9 +71,9 @@ const GetData = (props) => {
     toast.success("update complete todo successfully");
   };
 
-  // useEffect(() => {
-  //   dispatch(actionGetTodo());
-  // }, []);
+  useEffect(() => {
+    dispatch(actionGetTodo());
+  }, []);
 
   return (
     <div>

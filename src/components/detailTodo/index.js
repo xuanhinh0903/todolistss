@@ -49,6 +49,7 @@ function DetailTodo(props) {
   const handleDelete = (e) => {
     props.handleClose();
     dispatch(actionDeleteTodo(props?.dataDetail));
+    toast.success("delete todo successfully");
   };
 
   const handleClose = () => {
@@ -64,6 +65,7 @@ function DetailTodo(props) {
     };
     props.handleClose();
     dispatch(actionUpdateTodo(newData, id));
+    toast.success("update todo successfully");
   };
 
   const handleUpdate = () => {
@@ -80,6 +82,7 @@ function DetailTodo(props) {
       complete: !props?.dataDetail.complete,
     };
     props.handleClose();
+    toast.success("update todo successfully");
     dispatch(actionUpdateTodo(newCheck, props?.dataDetail.id));
   };
 
