@@ -74,10 +74,6 @@ const todoreducer = (state = initalValue, action) => {
     default:
       return state;
   }
-  console.log(
-    "🚀 ~ file: todolistReducer.js:81 ~ todoreducer ~ action:",
-    action
-  );
 };
 
 export default todoreducer;

@@ -13,15 +13,18 @@ const TodoList = (props) => {
   const navigation = useNavigate();
   const DATA = useSelector((state) => state?.todolistReducer);
 
-  if (DATA?.message?.message) {
-    toast.error("token expires");
-    dispatch({ type: "CLEAR_DATA" });
-    localStorage.removeItem("token");
-    navigation("/login");
-  }
   useEffect(() => {
     dispatch(actionGetTodo());
   }, []);
+
+  useEffect(() => {
+    if (DATA?.message?.message) {
+      toast.error("token expires");
+      dispatch({ type: "CLEAR_DATA" });
+      localStorage.removeItem("token");
+      navigation("/login");
+    }
+  }, [DATA?.message?.message]);
 
   return (
     <>

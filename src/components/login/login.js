@@ -38,9 +38,9 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status, requesting, message } = useSelector(
-    (state) => state?.loginReducer
-  );
+  const { status, requesting, message } = useSelector((state) => {
+    return state?.loginReducer;
+  });
 
   const onSubmit = () => {
     dispatch(actionLogin(watch()));
@@ -71,7 +71,11 @@ const Login = () => {
             <Grid
               container
               component="main"
-              sx={{ height: "100vh", justifyContent: "center", margin: "0 auto" }}
+              sx={{
+                height: "100vh",
+                justifyContent: "center",
+                margin: "0 auto",
+              }}
             >
               <CssBaseline />
               <Grid />
