@@ -1,25 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PrivateRouter from "./components/privateRouter/index";
+import Login from "./components/login/login";
+import Register from "./components/register/register";
+import TodoList from "./pages/todo";
+import { Route, Routes } from "react-router-dom";
+import PublicRouter from "./components/publicRouter";
+import { ToastContainer } from "react-toastify";
+import DefaultLayout from "./components/defaultLayout";
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [check, setCheck] = useState(false);
+  const setCheckTrue = () => {
+    setCheck(true);
+  };
+  const setCheckFalse = () => {
+    setCheck(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ToastContainer />
+      <Routes>
+        {PrivateRouter.map((router, index) => {
+          return (
+            <Route
+              key={index}
+              path={router.path}
+              element={<router.component />}
+            />
+          );
+        })}
+        {PublicRouter.map((router, index) => {
+          return (
+            <Route
+              path={router.path}
+              key={index}
+              element={
+                <ProtectedRoute>
+                  <DefaultLayout
+                    setCheckTrue={setCheckTrue}
+                    setCheckFalse={setCheckFalse}
+                    check={check}
+                  >
+                    <router.component check={check}/>
+                  </DefaultLayout>
+                </ProtectedRoute>
+              }
+            />
+          );
+        })}
+      </Routes>
+    </>
   );
-}
+};
 
 export default App;
