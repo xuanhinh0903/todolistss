@@ -16,6 +16,7 @@ const AddData = () => {
   const ADDTOTO = useSelector((state) => {
     return state?.todolistReducer;
   });
+  const { requesting } = ADDTOTO;
   const schema = yup.object().shape({
     name: yup.string().required("Required"),
     title: yup.string().required("Required"),
@@ -48,7 +49,7 @@ const AddData = () => {
   return (
     <div>
       <ToastContainer />
-      {ADDTOTO?.requesting ? (
+      {requesting ? (
         <CircularIndeterminate />
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -23,8 +23,9 @@ import {
 } from "../../action/actionTodo";
 
 const GetData = (props) => {
-  const dispatch = useDispatch();
+  const { requesting, list, message } = props?.data;
 
+  const dispatch = useDispatch();
   const DATA = useSelector((state) => state?.todolistReducer);
   const {
     register,
@@ -77,7 +78,7 @@ const GetData = (props) => {
   return (
     <div>
       <ToastContainer />
-      {props?.data?.requesting && !props?.data.message ? (
+      {requesting && !message ? (
         <CircularIndeterminate />
       ) : (
         <List
@@ -87,7 +88,7 @@ const GetData = (props) => {
             marginTop: "100px",
           }}
         >
-          {props?.data?.list?.map((item, index) => (
+          {list.map((item, index) => (
             <Box key={index} onDoubleClick={() => handleDouble(item)}>
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <ListItem alignItems="flex-start">
