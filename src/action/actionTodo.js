@@ -70,6 +70,7 @@ export const actionGetTodo = (data) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
+    console.log("🚀 ~ file: actionTodo.js:73 ~ actionGetTodo ~ response:", response)
 
     dispatch({
       type: "DATA_SUCCESS",

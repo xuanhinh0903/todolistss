@@ -17,8 +17,9 @@ const TodoList = (props) => {
     dispatch(actionGetTodo());
   }, []);
 
+  console.log(DATA?.message?.message);
   useEffect(() => {
-    if (DATA?.message?.message) {
+    if (DATA?.message?.message === "Request failed with status code 404") {
       toast.error("token expires");
       dispatch({ type: "CLEAR_DATA" });
       localStorage.removeItem("token");
