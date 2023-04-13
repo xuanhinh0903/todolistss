@@ -71,25 +71,25 @@ const Login = () => {
             <Grid
               container
               component="main"
-              sx={{ height: "100vh", justifyContent: "center" }}
+              sx={{ height: "100vh", justifyContent: "center", margin: "0 auto" }}
             >
               <CssBaseline />
-              <Grid item xs={false} sm={1} md={9} />
+              <Grid />
               <Grid>
                 <Box
                   sx={{
-                    my: 8,
-                    mx: 50,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    width: "800px",
+                    margin: "150px auto",
                   }}
                 >
                   <Typography component="h1" variant="h5">
                     Login
                   </Typography>
-                  <Box sx={{ mt: 1 }}>
+                  <Box sx={{ width: "100%" }}>
                     <TextField
                       margin="normal"
                       fullWidth

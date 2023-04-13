@@ -12,10 +12,6 @@ const TodoList = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const DATA = useSelector((state) => state?.todolistReducer);
-  console.log(
-    "🚀 ~ file: todo.js:15 ~ TodoList ~ DATA:",
-    DATA?.message?.message
-  );
 
   if (DATA?.message?.message) {
     toast.error("token expires");
