@@ -20,7 +20,6 @@ const todoreducer = (state = initalValue, action) => {
         requesting: false,
         list: action.list,
         status: action.status,
-        message: undefined,
       };
     case "DATA_ADD_SUCCESS":
       return {
@@ -28,8 +27,6 @@ const todoreducer = (state = initalValue, action) => {
         transaction: action.transaction,
         requesting: false,
         list: [action.data, ...state.list],
-        status: action.status,
-        message: undefined,
       };
     case "DATA_DELETE":
       return {
@@ -38,7 +35,7 @@ const todoreducer = (state = initalValue, action) => {
         requesting: false,
         message: undefined,
         list: state.list.filter(
-          (item, index) => item.id !== action.transaction.deleteId
+          (item) => item.id !== action.transaction.deleteId
         ),
       };
     case "DATA_UPDATE":
@@ -46,8 +43,7 @@ const todoreducer = (state = initalValue, action) => {
         ...state,
         transaction: action.transaction,
         requesting: false,
-        message: undefined,
-        list: state.list.map((item, index) => {
+        list: state.list.map((item) => {
           if (item.id === action.payload.updateId) {
             return {
               ...item,
@@ -61,7 +57,7 @@ const todoreducer = (state = initalValue, action) => {
       return {
         ...state,
         requesting: false,
-        message: undefined,
+        message: "",
         transaction: null,
         status: undefined,
       };

@@ -1,35 +1,44 @@
 import axios from "axios";
-
-export const actionLogin = (data) => async (dispatch) => {
-  try {
-    dispatch({ type: "CHECK_LOGIN_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/token`;
-    const response = await axios({
-      method: "Post",
-      url: url,
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-      data,
-    });
-    console.log("🚀 ~ file: loginSlice.js:13 ~ actionLogin ~ response:", response)
-
-    response.data.access_token &&
-      localStorage.setItem("token", response.data.access_token);
-    dispatch({
-      type: "CHECK_LOGIN_SUCCESS",
-      status: response.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: "CHECK_LOGIN_ERROR",
-      message: error,
-    });
-  }
-};
+import { toast } from "react-toastify";
+import { url } from "../common/common";
 
 const initalValue = {
   status: null,
   requesting: false,
   message: "",
+};
+
+export const actionLogin = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: "CHECK_LOGIN_RESQUEST" });
+    const response = await axios({
+      method: "post",
+      url: `${url}/token`,
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      data,
+    });
+
+    if (response.data.access_token) {
+      localStorage.setItem("token", response.data.access_token);
+      toast.success("login success");
+      dispatch({
+        type: "CHECK_LOGIN_SUCCESS",
+        status: response.status,
+      });
+    } else {
+      toast.error("login error");
+      dispatch({
+        type: "CHECK_LOGIN_ERROR",
+        message: "login error",
+      });
+    }
+  } catch (error) {
+    toast.error("login error");
+    dispatch({
+      type: "CHECK_LOGIN_ERROR",
+      message: error,
+    });
+  }
 };
 
 const loginReducer = (state = initalValue, action) => {
@@ -45,17 +54,10 @@ const loginReducer = (state = initalValue, action) => {
         requesting: false,
         status: action.status,
       };
-    case "CLEAR_LOGIN_SUCCESS":
-      return {
-        ...state,
-        requesting: false,
-        message: undefined,
-      };
     case "CHECK_LOGIN_ERROR":
       return {
         ...state,
         message: action.message,
-        status: null,
       };
 
     default:

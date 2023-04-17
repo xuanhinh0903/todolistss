@@ -1,13 +1,9 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -17,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { actionRegister } from "../../reducer/registerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import CircularIndeterminate from "../loading";
-import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 function Copyright(props) {
@@ -65,18 +60,14 @@ const Register = () => {
 
   const onSubmit = (data) => {
     dispatch(actionRegister(data));
-    // toast.success("trans.toastMessages.createSuccesssAdminAccount");
   };
 
   React.useEffect(() => {
-    console.log(status);
     if (status === 200) {
-      // alert("create success");
-      toast.success("registered successfully");
       navigate("/login");
     }
     if (message) {
-      alert("xin vui lòng thử lại");
+      navigate("/register");
     }
   }, [status, requesting, message]);
   return (

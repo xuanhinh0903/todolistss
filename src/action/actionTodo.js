@@ -1,60 +1,88 @@
 import axios from "axios";
-const token = localStorage.getItem("token");
+import { url } from "../common/common";
+import { toast } from "react-toastify";
+import { CallToken } from "../common/common";
 
 // add todo
 export const actionAddTodo = (datas) => async (dispatch) => {
   try {
-    // dispatch({ type: "DATA_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/todos/`;
     const response = await axios({
       method: "post",
-      url: url,
+      url: `${url}/todos/`,
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${CallToken()}`,
       },
       data: datas,
     });
 
-    dispatch({
-      type: "DATA_ADD_SUCCESS",
-      transaction: response.data.transaction,
-      data: datas,
-    });
+    if (response?.status === 200) {
+      dispatch({
+        type: "DATA_ADD_SUCCESS",
+        transaction: response.data.transaction,
+        data: datas,
+      });
+      toast.success("add todo successfully");
+    } else {
+      dispatch({
+        type: "DATA_ERROR",
+        message: "add data failed",
+      });
+      toast.error("add todo failed");
+    }
   } catch (error) {
+    if (error?.response?.status === 404) {
+      localStorage.removeItem("token");
+      window.location.reload();
+      toast.warning("please login again..");
+    }
     dispatch({
       type: "DATA_ERROR",
       message: error,
     });
+    toast.warning("Error! An error occurred. Please try again later");
   }
 };
 
 // delete todo
-
 export const actionDeleteTodo = (datas) => async (dispatch) => {
   try {
-    const url = `https://fastapi-todos-be.onrender.com/todos/${datas.id}`;
     const response = await axios({
       method: "delete",
-      url: url,
+      url: `${url}/todos/${datas.id}`,
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${CallToken()}`,
       },
     });
 
-    dispatch({
-      type: "DATA_DELETE",
-      transaction: {
-        status: response.data.transaction,
-        deleteId: datas.id,
-      },
-    });
+    if (response?.status === 200) {
+      dispatch({
+        type: "DATA_DELETE",
+        transaction: {
+          status: response.data.transaction,
+          deleteId: datas.id,
+        },
+      });
+      toast.success("Delete todo successfully");
+    } else {
+      dispatch({
+        type: "DATA_ERROR",
+        message: "delete todo failed",
+      });
+      toast.error("Delete todo successfully");
+    }
   } catch (error) {
+    if (error?.response?.status === 404) {
+      // localStorage.removeItem("token");
+      // window.location.reload();
+      toast.warning("please login again..");
+    }
     dispatch({
       type: "DATA_ERROR",
       message: error,
     });
+    toast.warning("Error! An error occurred. Please try again later");
   }
 };
 
@@ -62,26 +90,39 @@ export const actionDeleteTodo = (datas) => async (dispatch) => {
 export const actionGetTodo = (data) => async (dispatch) => {
   try {
     dispatch({ type: "DATA_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/todos/`;
     const response = await axios({
       method: "get",
-      url: url,
+      url: `${url}/todos/`,
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${CallToken()}`,
       },
     });
 
-    dispatch({
-      type: "DATA_SUCCESS",
-      list: response.data,
-      status: response.status,
-    });
+    if (response?.status === 200) {
+      dispatch({
+        type: "DATA_SUCCESS",
+        list: response.data,
+        status: response.status,
+      });
+    } else {
+      dispatch({
+        type: "DATA_ERROR",
+        message: "get data error",
+      });
+      toast.error("get list todo error");
+    }
   } catch (error) {
+    if (error?.response?.status === 404) {
+      localStorage.removeItem("token");
+      window.location.reload();
+      toast.warning("please login again..");
+    }
     dispatch({
       type: "DATA_ERROR",
       message: error,
     });
+    toast.warning("Error! An error occurred. Please try again later");
   }
 };
 
@@ -89,29 +130,43 @@ export const actionGetTodo = (data) => async (dispatch) => {
 
 export const actionUpdateTodo = (datas, id) => async (dispatch) => {
   try {
-    const url = `https://fastapi-todos-be.onrender.com/todos/${id}`;
     const response = await axios({
       method: "put",
-      url: url,
+      url: `${url}/todos/${id}`,
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${CallToken()}`,
       },
       data: datas,
     });
 
-    dispatch({
-      type: "DATA_UPDATE",
-      payload: {
-        status: response.data.transaction,
-        updateId: id,
-        data: datas,
-      },
-    });
+    if (response?.status === 200) {
+      dispatch({
+        type: "DATA_UPDATE",
+        payload: {
+          status: response.data.transaction,
+          updateId: id,
+          data: datas,
+        },
+      });
+      toast.success("update complete");
+    } else {
+      dispatch({
+        type: "DATA_ERROR",
+        message: "update data error",
+      });
+      toast.error("update todo error");
+    }
   } catch (error) {
+    if (error?.response?.status === 404) {
+      localStorage.removeItem("token");
+      window.location.reload();
+      toast.warning("please login again..");
+    }
     dispatch({
       type: "DATA_ERROR",
       message: error,
     });
+    toast.warning("Error! An error occurred. Please try again later");
   }
 };

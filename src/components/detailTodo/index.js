@@ -1,34 +1,26 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import { useEffect, useState } from "react";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-import SettingsIcon from "@mui/icons-material/Settings";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { Box, Checkbox, Grid, Radio, TextField } from "@mui/material";
 import * as yup from "yup";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import CssBaseline from "@mui/material/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  actionDeleteTodo,
-  // actionGetTodo,
-  actionUpdateTodo,
-} from "../../action/actionTodo";
-import UpdateData from "../updateData";
+import { actionDeleteTodo, actionUpdateTodo } from "../../action/actionTodo";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import Typography from "@mui/material/Typography";
+import { Box, Checkbox, Grid, Radio, TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
 const theme = createTheme();
 function DetailTodo(props) {
   const { id, description, complete, title } = props?.dataDetail;
-  const [dataDetail, setDataDetail] = React.useState(null);
   const [openDetail, setOpenDetail] = React.useState(false);
   const [selectedValue, setSelectedValue] = useState("a");
 
@@ -39,24 +31,21 @@ function DetailTodo(props) {
   const {
     register,
     handleSubmit,
-    watch,
-    reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
   const dispatch = useDispatch();
 
-  const handleDelete = (e) => {
+  const handleDelete = () => {
     props.handleClose();
     dispatch(actionDeleteTodo(props?.dataDetail));
-    toast.success("delete todo successfully");
   };
 
   const handleClose = () => {
     setOpenDetail(false);
   };
 
-  const onSubmit = (data, e) => {
+  const onSubmit = (data) => {
     const complete = selectedValue !== "a";
     const newData = {
       complete: complete,
@@ -65,7 +54,6 @@ function DetailTodo(props) {
     };
     props.handleClose();
     dispatch(actionUpdateTodo(newData, id));
-    toast.success("update todo successfully");
   };
 
   const handleUpdate = () => {

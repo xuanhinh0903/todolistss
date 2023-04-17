@@ -9,22 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const TodoList = (props) => {
   const { check } = props;
-  const dispatch = useDispatch();
-  const navigation = useNavigate();
   const DATA = useSelector((state) => state?.todolistReducer);
-
-  // useEffect(() => {
-  //   dispatch(actionGetTodo());
-  // }, []);
-
-  useEffect(() => {
-    if (DATA?.message?.message === "Request failed with status code 404") {
-      toast.error("token expires");
-      dispatch({ type: "CLEAR_DATA" });
-      localStorage.removeItem("token");
-      navigation("/login");
-    }
-  }, [DATA?.message?.message]);
 
   return (
     <>

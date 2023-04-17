@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Route, useNavigate } from "react-router-dom";
+import { CallToken } from "../../common/common";
 const ProtectedRoute = (props) => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const checkUserToken = () => {
-    const userToken = localStorage.getItem("token");
-    if (!userToken || userToken === "undefined") {
+    if (!CallToken() || CallToken() === "undefined") {
       setIsLoggedIn(false);
       return navigate("/login");
     }

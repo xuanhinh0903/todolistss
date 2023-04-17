@@ -1,18 +1,24 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import { url } from "../common/common";
 
 export const actionRegister = (data) => async (dispatch) => {
   try {
     dispatch({ type: "CHECK_REGISTER_RESQUEST" });
-    const url = `https://fastapi-todos-be.onrender.com/user`;
     const response = await axios({
       method: "post",
-      url: url,
+      url: `${url}/user`,
       headers: {
         "content-type": "application/json",
       },
       data,
     });
 
+    if (response?.status === 200) {
+      toast.success("register successfully");
+    } else {
+      toast.error("register error");
+    }
     dispatch({
       type: "CHECK_REGISTER_SUCCESS",
       status: response.status,

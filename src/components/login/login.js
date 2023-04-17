@@ -1,22 +1,21 @@
+import * as yup from "yup";
 import * as React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { actionLogin } from "../../reducer/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import CircularIndeterminate from "../loading";
+import { ToastContainer } from "react-toastify";
+import { CallToken } from "../../common/common";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { actionLogin } from "../../reducer/loginSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import CircularIndeterminate from "../loading";
-import { toast, ToastContainer } from "react-toastify";
 
 const theme = createTheme();
 
@@ -38,7 +37,7 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(schema) });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status, requesting, message } = useSelector((state) => {
+  const { requesting, message } = useSelector((state) => {
     return state?.loginReducer;
   });
 
@@ -46,19 +45,11 @@ const Login = () => {
     dispatch(actionLogin(watch()));
   };
 
-  const userToken = localStorage.getItem("token");
   React.useEffect(() => {
-    if (userToken) {
-      toast.success("login success");
+    if (CallToken()) {
       navigate("/");
     }
-    if (message?.response?.status === 400) {
-      dispatch({
-        type: "CLEAR_LOGIN_SUCCESS",
-      });
-      toast.error("accout errors");
-    }
-  }, [userToken, message]);
+  }, [CallToken()]);
 
   return (
     <div>

@@ -8,12 +8,11 @@ import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Box, Button, Grid, Radio, TextField, Typography } from "@mui/material";
-import CircularIndeterminate from "../loading";
 import { useNavigate } from "react-router-dom";
 import { actionUpdateTodo } from "../../action/actionTodo";
 const theme = createTheme();
 const UpdateData = (props) => {
-  const { description, complete, title, id } = props?.dataDetail;
+  const { description, title, id } = props?.dataDetail;
   const [selectedValue, setSelectedValue] = useState("a");
   const navigate = useNavigate();
 
@@ -39,7 +38,6 @@ const UpdateData = (props) => {
     };
     props.handleClose();
     dispatch(actionUpdateTodo(newData, id));
-    toast.success("update todo successfully");
   };
 
   const handleChange = (event) => {

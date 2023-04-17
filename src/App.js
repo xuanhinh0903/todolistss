@@ -1,9 +1,6 @@
 import "./App.css";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRouter from "./components/privateRouter/index";
-import Login from "./components/login/login";
-import Register from "./components/register/register";
-import TodoList from "./pages/todo";
 import { Route, Routes } from "react-router-dom";
 import PublicRouter from "./components/publicRouter";
 import { ToastContainer } from "react-toastify";
@@ -44,7 +41,7 @@ const App = () => {
                     setCheckFalse={setCheckFalse}
                     check={check}
                   >
-                    <router.component check={check}/>
+                    <router.component check={check} />
                   </DefaultLayout>
                 </ProtectedRoute>
               }

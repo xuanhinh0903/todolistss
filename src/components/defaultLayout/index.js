@@ -54,23 +54,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 export default function DefaultLayout(props) {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box sx={{ display: "flex" }}>
       <ToastContainer />
       <CssBaseline />
       <NavBar props={props} />
-      <Main open={open}>
+      <Main>
         <DrawerHeader />
         <Box sx={{ maxWidth: "800px", margin: "-80px auto" }}>
           {props.children}
